@@ -1,20 +1,14 @@
-environment:
-  matrix:
-    - GENERATOR: Visual Studio 14 2015 Win64
-    - GENERATOR: Visual Studio 14 2015
-    - GENERATOR: Visual Studio 12 2013 Win64
-    - GENERATOR: Visual Studio 12 2013
+install:
+  - pip install meson ninja
 
 before_build:
   - ps: |
-      mkdir build
-      cd build
-      cmake -G "$env:GENERATOR" ..
+      meson setup build
 
 build_script:
   - ps: |
-      cmake --build . --config Debug
+      meson compile -C build
 
 test_script:
   - ps: |
-      ctest --output-on-failure --interactive-debug-mode 0 -C Debug
+      meson test -C build --print-errorlogs

@@ -10,7 +10,7 @@ It targets similar compression rates at higher compression and decompression spe
 Files
 -----
     README.md                             This file ;-)
-    Makefile                              Linux / macOS Makefile
+    meson.build                           Meson build definition
     lzfse.xcodeproj                       Xcode project
 
     src/lzfse.h                           Main LZFSE header
@@ -43,28 +43,18 @@ Produces the following files in `/tmp/lzfse.dst`:
     usr/local/include/lzfse.h             LZFSE library header
     usr/local/lib/liblzfse.a              LZFSE library
 
-Building on Linux
------------------
+Building with Meson
+--------------------
 
 Tested on Ubuntu 15.10 with gcc 5.2.1 and clang 3.6.2. Should work on any recent distribution.
 
-    $ make install INSTALL_PREFIX=/tmp/lzfse.dst/usr/local
-
-Produces the following files in `/tmp/lzfse.dst`:
-
-    usr/local/bin/lzfse                   command line tool
-    usr/local/include/lzfse.h             LZFSE library header
-    usr/local/lib/liblzfse.a              LZFSE library
-
-Building with cmake
--------------------
-
-    $ mkdir build
-    $ cd build
-    $ cmake ..
-    $ make install
+    $ meson setup build
+    $ meson compile -C build
+    $ sudo meson install -C build
 
 Installs the header, library, and command line tool in `/usr/local`.
+
+Disable the round-trip test suite with `-Ddisable_tests=true` if desired.
 
 Bindings
 --------
